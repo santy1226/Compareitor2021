@@ -1,2 +1,2 @@
-# Compareitor2021
-Comparador de archivos 
+# Comparator_App
+Una aplicacion sencilla para comparar textos usando flask
