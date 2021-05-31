@@ -64,6 +64,7 @@ def loginPage():
 #Comparador; nivel 3 de autorizacion
 @app.route('/free_comparator',methods=['GET','POST'])
 def free_comparator():
+    comm = "Acesso al comparador de nivel 1"
     action = render_template("lvl2Comparator.html",data=["",""]) #Se establece una accion predeterminada, en este caso sera simplemente cargar lvl2Comparator.html sin ningun cambio
     if app.config['USER'][3]==2: #Se comprueba que el usuario tenga el nivel adecuado de autorizacion
         valid,loaded,filesData=True,False,["",""]
@@ -100,6 +101,7 @@ def free_comparator():
 #Comparador; nivel 2 de autorizacion
 @app.route('/comparator',methods=['GET','POST'])
 def comparator():
+    comm = "Acesso al comparador de nivel 2"
     action = render_template("lvl1Comparator.html",data=["",""])
     if app.config['USER'][3]==1: #Se comprueba que el usuario tenga el nivel adecuado de autorizacion
         filesData,diff,valid,filesRequired=["",""],"",True,True
@@ -147,6 +149,7 @@ def comparator():
 #Logs; nivel 1 de autorizacion
 @app.route('/log')
 def log():
+    comm = "Acesso al log"
     if app.config['USER'][3]==0: #Se comprueba que el usuario tenga el nivel adecuado de autorizacion
         action = render_template("logs.html")
         if request.method == 'GET':
@@ -155,7 +158,7 @@ def log():
     else:
         comm = "El usuario no tiene los privilegios suficientes para ingresar al Log history"
         action = redirect('/error') #El usuario se redirige a la pagina de error por no tener los privilegios necesarios
-        db.registLog(comm,app.config['USER'][0]) #Se crea el log correspondiente a la accion
+    db.registLog(comm,app.config['USER'][0]) #Se crea el log correspondiente a la accion
     return action
 
 @app.route('/error')
