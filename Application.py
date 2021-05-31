@@ -155,7 +155,7 @@ def log():
     else:
         comm = "El usuario no tiene los privilegios suficientes para ingresar al Log history"
         action = redirect('/error') #El usuario se redirige a la pagina de error por no tener los privilegios necesarios
-    db.registLog(comm,app.config['USER'][0]) #Se crea el log correspondiente a la accion
+        db.registLog(comm,app.config['USER'][0]) #Se crea el log correspondiente a la accion
     return action
 
 @app.route('/error')
