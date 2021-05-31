@@ -19,8 +19,10 @@ class FileChecker:
         file = open(file)
         i=0
         isValid=True
+        counter = 0
         try:
             for rows in file:
+                counter+=1
                 row = rows.split(",")
                 if row[0]==";": break
                 if len(row)>2:
@@ -41,6 +43,7 @@ class FileChecker:
             file.close()
         except:
             isValid = False
+        isValid = isValid and counter==6
         return isValid
 
     """
@@ -48,12 +51,13 @@ class FileChecker:
         (str)=>bool
     """
     def txtCheck(self,file):
-        
         file = open(file)
         i=0
         isValid=True
+        counter = 0
         try:
             for rows in file:
+                counter+=1
                 row = rows.split(":")
                 if row[0]==";": break
                 row[0],row[1]=row[0].strip(),row[1].strip()
@@ -71,6 +75,7 @@ class FileChecker:
             file.close()
         except:
             isValid = False
+        isValid = isValid and counter==6
         return isValid
 
     """
@@ -80,8 +85,10 @@ class FileChecker:
     def xlsCheck(self,file):
         book = xls.open_workbook(file)
         file = book.sheet_by_index(0)
+        counter = 0
         try:
             for i in range(5):
+                counter+=1
                 row = [file.cell_value(0,i),file.cell_value(1,i)]
                 if row[0].lower()==self.toCheck[i][0]:
                     value=row[1]
@@ -97,6 +104,7 @@ class FileChecker:
             book.release_resources()
         except:
             isValid = False
+        isValid = isValid and counter==5
         return isValid
 
     """
