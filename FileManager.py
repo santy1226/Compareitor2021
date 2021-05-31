@@ -19,25 +19,28 @@ class FileChecker:
         file = open(file)
         i=0
         isValid=True
-        for rows in file:
-            row = rows.split(",")
-            if row[0]==";": break
-            if len(row)>2:
-                for i in range(2,len(row)):
-                    row[1]+=str(row[i])
-            row[0],row[1]=row[0].strip(),row[1].strip()
-            if row[0].lower()==self.toCheck[i][0]:
-                value=row[1].replace(",","")
-                try:
-                    self.toCheck[i][1](value)
-                    isValid=self.toCheck[i][2](value)
-                except:
+        try:
+            for rows in file:
+                row = rows.split(",")
+                if row[0]==";": break
+                if len(row)>2:
+                    for i in range(2,len(row)):
+                        row[1]+=str(row[i])
+                row[0],row[1]=row[0].strip(),row[1].strip()
+                if row[0].lower()==self.toCheck[i][0]:
+                    value=row[1].replace(",","")
+                    try:
+                        self.toCheck[i][1](value)
+                        isValid=self.toCheck[i][2](value)
+                    except:
+                        isValid=False
+                else:
                     isValid=False
-            else:
-                isValid=False
-            if not(isValid): break
-            i+=1
-        file.close()
+                if not(isValid): break
+                i+=1
+            file.close()
+        except:
+            isValid = False
         return isValid
 
     """
@@ -49,22 +52,25 @@ class FileChecker:
         file = open(file)
         i=0
         isValid=True
-        for rows in file:
-            row = rows.split(":")
-            if row[0]==";": break
-            row[0],row[1]=row[0].strip(),row[1].strip()
-            if row[0].lower()==self.toCheck[i][0]:
-                value=row[1].replace(",","")
-                try:
-                    self.toCheck[i][1](value)
-                    isValid=self.toCheck[i][2](value)
-                except:
+        try:
+            for rows in file:
+                row = rows.split(":")
+                if row[0]==";": break
+                row[0],row[1]=row[0].strip(),row[1].strip()
+                if row[0].lower()==self.toCheck[i][0]:
+                    value=row[1].replace(",","")
+                    try:
+                        self.toCheck[i][1](value)
+                        isValid=self.toCheck[i][2](value)
+                    except:
+                        isValid=False
+                else:
                     isValid=False
-            else:
-                isValid=False
-            if not(isValid): break
-            i+=1
-        file.close()
+                if not(isValid): break
+                i+=1
+            file.close()
+        except:
+            isValid = False
         return isValid
 
     """
@@ -74,20 +80,23 @@ class FileChecker:
     def xlsCheck(self,file):
         book = xls.open_workbook(file)
         file = book.sheet_by_index(0)
-        for i in range(5):
-            row = [file.cell_value(0,i),file.cell_value(1,i)]
-            if row[0].lower()==self.toCheck[i][0]:
-                value=row[1]
-                if isinstance(value,str): value=value.replace(",","")
-                try:
-                    self.toCheck[i][1](value)
-                    isValid=self.toCheck[i][2](str(value))
-                except:
+        try:
+            for i in range(5):
+                row = [file.cell_value(0,i),file.cell_value(1,i)]
+                if row[0].lower()==self.toCheck[i][0]:
+                    value=row[1]
+                    if isinstance(value,str): value=value.replace(",","")
+                    try:
+                        self.toCheck[i][1](value)
+                        isValid=self.toCheck[i][2](str(value))
+                    except:
+                        isValid=False
+                else:
                     isValid=False
-            else:
-                isValid=False
-            if not(isValid): break
-        book.release_resources()
+                if not(isValid): break
+            book.release_resources()
+        except:
+            isValid = False
         return isValid
 
     """
