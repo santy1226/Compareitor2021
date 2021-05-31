@@ -60,7 +60,7 @@ class DatabaseManager:
         Consulta en la base de datos todos los registros de logs
         (psycopg2.extras.DictCursor)=>List
     """
-    def consultLogs(self,cur):
+    def consultLogs(self):
         try:
             self.cur.execute("select id_log,username,log_date,commentary from logs x join users y on x.id_user = y.id_user;")
             result=self.cur.fetchall()
